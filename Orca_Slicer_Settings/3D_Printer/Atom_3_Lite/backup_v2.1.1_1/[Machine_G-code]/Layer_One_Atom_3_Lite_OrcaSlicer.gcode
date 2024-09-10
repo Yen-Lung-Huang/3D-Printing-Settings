@@ -21,7 +21,7 @@ G4 P2500 ; wait for 2500 milliseconds (2.5 second)
 G1 F3000 ; set feed rate back to 3000
 G1 X-20 Y-80 Z-0.05 ; move to position with speed F3000, scrape off any excess filament
 G92 E0.0 ; zero the extruded length again
-M106 S50 ; set fan to low speed
+M106 S65 ; set fan to low speed
 
 ; Put printing message on LCD screen
 ; MACHINE START CODE
