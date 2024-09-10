@@ -1,5 +1,7 @@
 ; Machine start G-code
 
+; Machine start G-code
+
 ; MACHINE START CODE
 M106 S255 ; turn fan on full for cooling
 M104 S[first_layer_temperature] ; set extruder temp
@@ -14,12 +16,14 @@ G92 E0.0 ; zero the extruded length
 
 ; intro line
 G1 F3000 ; set feed rate to 3000
-G1 X0 Y-100 Z1 ; move to position with previously set speed (F3000)
+G1 X0 Y-130 Z1 ; move to position with previously set speed (F3000)
+M106 S0 ; turn off fan
 G1 F3000 E30 ; extrude 30 mm of filament (to compensate for the 30 mm retraction at the end)
 G1 F600 E30 ; change to slower speed for precise extrusion and extrude 30 mm of filament
-G4 P2500 ; wait for 2500 milliseconds (2.5 second)
-G1 F3000 ; set feed rate back to 3000
-G1 X-20 Y-80 Z-0.05 ; move to position with speed F3000, scrape off any excess filament
+G4 P1000 ; wait for 1000 milliseconds (1 second)
+G1 F3000 ; set feed rate to 3000
+G1 X-40 Y-120 Z-0.05 ; scrape off any excess filament
+G1 X40 Y-120 Z-0.05 ; scrape off any excess filament
 G92 E0.0 ; zero the extruded length again
 M106 S65 ; set fan to low speed
 
