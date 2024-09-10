@@ -1,34 +1,34 @@
-; Machine start G-code
+; Machine start G-code for Delta 3D printer with Bowden extruder
 
-; Machine start G-code
+; MACHINE START CODE START
+M106 S255 ; Turn fan on full for cooling during heating
+M104 S[first_layer_temperature] ; Set extruder temperature for first layer
+M140 S[first_layer_bed_temperature] ; Set bed temperature for first layer
+M109 S[first_layer_temperature] ; Wait for extruder to reach target temp
+M190 S[first_layer_bed_temperature] ; Wait for bed to reach target temp
+G21 ; Use metric units
+G90 ; Use absolute positioning
+G28 ; Home all axes
+G92 E0.0 ; Reset extruder position to 0
 
-; MACHINE START CODE
-M106 S255 ; turn fan on full for cooling
-M104 S[first_layer_temperature] ; set extruder temp
-M140 S[first_layer_bed_temperature] ; set bed temp
-M109 S[first_layer_temperature] ; wait for extruder temp
-M190 S[first_layer_bed_temperature] ; wait for bed temp
-G21 ; metric values
-G90 ; use absolute coordinates
-G28 ; home all
-G4 P500 ; wait for 500 milliseconds (0.5 second)
-G92 E0.0 ; zero the extruded length
+; Prime and clean nozzle
+G1 Z10 F3000 ; Move up slightly to avoid bed
+G0 X0 Y-130 Z1 ; Move to the front of the bed for priming
+M106 S0 ; Turn off fan
+G1 E30 F3000 ; Prime nozzle with fast extrusion (30mm filament)
+G1 E30 F600 ; Slow extrusion for more precise priming
+M400 ; Wait for extrusion to complete
 
-; intro line
-G1 F3000 ; set feed rate to 3000
-G1 X0 Y-130 Z1 ; move to position with previously set speed (F3000)
-M106 S0 ; turn off fan
-G1 F3000 E30 ; extrude 30 mm of filament (to compensate for the 30 mm retraction at the end)
-G1 F600 E30 ; change to slower speed for precise extrusion and extrude 30 mm of filament
-G4 P1000 ; wait for 1000 milliseconds (1 second)
-G1 F3000 ; set feed rate to 3000
-G1 X-40 Y-120 Z-0.05 ; scrape off any excess filament
-G1 X40 Y-120 Z-0.05 ; scrape off any excess filament
-G92 E0.0 ; zero the extruded length again
+; Prepare for printing
+G1 X0 Y-130 Z0.2 F3000 ; Move nozzle close to the bed to start printing
+G2 X-78 Y-104 I0 J130 Z-0.05 E0.0001 F{outer_wall_volumetric_speed/(0.3*0.5) * 60} ; move in a partial circle to (-78, 104), gradually lowering Z
+G1 F3000 ; set feed rate back to F3000
+G92 E0.0 ; Reset extruder position to 0
 M106 S65 ; set fan to low speed
 
+; Ready for first layer
 ; Put printing message on LCD screen
-; MACHINE START CODE
+; MACHINE START CODE END
 
 
 
@@ -37,25 +37,26 @@ M106 S65 ; set fan to low speed
 
 ; Machine end G-code
 
-; MACHINE END CODE
-M104 S0 ; extruder heater off
-M140 S0 ; heated bed heater off
-M106 S255 ; turn fan on full for cooling
-G91 ; relative positioning
-G1 E-10 F4000 ; retract the filament
-G1 E-5 F600 ; retract more to release pressure
+; MACHINE END CODE START
+M104 S0 ; Turn off extruder heater
+M140 S0 ; Turn off bed heater
+M106 S255 ; Turn fan on full for cooling
+G91 ; Use relative positioning
+G1 E-10 F4000 ; Retract 10mm of filament to release pressure
+G1 E-5 F600 ; Slow retraction to prevent oozing
+M400 ; Wait for all movements to finish
 G4 P500 ; wait for 500 milliseconds (0.5 second)
-G1 Z+10 F3000 ; move Z up
-G90 ; absolute positioning
-G1 X0 Y0 ; move X/Y to home position
-G4 P120000 ; wait 2 minutes for cooling
-M106 S0 ; turn off fan
-G28 ; home all axes
-M84 ; disable motors
+G1 Z+10 F3000 ; Lift nozzle 10mm up
+G90 ; Return to absolute positioning
+G1 X0 Y0 ; Move to home position
+M400 ; Wait for all movements to finish
+M106 S0 ; Turn off fan
+G28 ; Home all axes
+M84 ; Disable stepper motors
 M300 S20 P50 ; beep
 G4 P25 ; wait
 M300 S20000 P50 ; beep
-; MACHINE END CODE
+; MACHINE END CODE END
 
 
 
