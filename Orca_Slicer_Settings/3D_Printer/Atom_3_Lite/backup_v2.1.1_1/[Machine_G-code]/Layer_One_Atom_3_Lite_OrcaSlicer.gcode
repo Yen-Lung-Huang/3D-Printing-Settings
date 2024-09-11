@@ -1,6 +1,6 @@
 ; Machine start G-code for Delta 3D printer with Bowden extruder
 
-; MACHINE START CODE START
+; MACHINE START CODE
 M106 S255 ; Turn fan on full for cooling during heating
 M104 S[first_layer_temperature] ; Set extruder temperature for first layer
 M140 S[first_layer_bed_temperature] ; Set bed temperature for first layer
@@ -16,80 +16,69 @@ G92 E0 ; Reset extruder position
 G1 Z10 F3000 ; Move up slightly to avoid bed
 G0 X0 Y-130 Z1 ; Move to the front of the bed for priming
 M106 S0 ; Turn off fan
-G1 E30 F1800 ; Prime nozzle with fast extrusion (30mm filament)
-G1 E30 F600 ; Slow extrusion for more precise priming
-G1 E-1 F1800 ; Small retraction to reduce oozing
+G1 E20 F1800 ; Prime nozzle with fast extrusion (20mm filament)
+G1 E20 F600 ; Slow extrusion for more precise priming
 M400 ; Wait for moves to complete
 
 ; Prepare for printing
-G1 X0 Y-130 Z0.2 F3000 ; Move nozzle close to the bed to start printing
+G1 X0 Y-130 Z1 F3000 ; Move nozzle close to the bed to start printing
 G2 X-78 Y-104 I0 J130 Z-0.05 E6 F{outer_wall_volumetric_speed/(0.3*0.5) * 60} ; move in a partial circle, gradually lowering Z and extruding 6mm
 M400 ; Wait for move to complete
 G1 F3000 ; set feed rate to 3000
 M106 S65 ; set fan to low speed
 G92 E0 ; Reset extruder position again
+; MACHINE START CODE
 
-; Ready for first layer
-; Put printing message on LCD screen
-; MACHINE START CODE END
-
-
-
-
-
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Machine end G-code
 
-; MACHINE END CODE START
+; MACHINE END CODE
 M104 S0 ; Turn off extruder heater
 M140 S0 ; Turn off bed heater
 M106 S255 ; Turn fan on full for cooling
 G91 ; Use relative positioning
-G1 E-10 F4000 ; Retract 10mm of filament to release pressure
-G1 E-5 F600 ; Slow retraction to prevent oozing
+G1 E-2 F1800 ; Quick retract 2mm to release pressure
+G1 E-8 F300 ; Slow retraction of 8mm to prevent oozing
 M400 ; Wait for all movements to finish
-G4 P500 ; wait for 500 milliseconds (0.5 second)
-G1 Z+10 F3000 ; Lift nozzle 10mm up
+G1 Z+20 F1200 ; Lift nozzle 20mm up slowly
 G90 ; Return to absolute positioning
-G1 X0 Y0 ; Move to home position
+G1 X0 Y0 F5000 ; Move to home position quickly
 M400 ; Wait for all movements to finish
 M106 S0 ; Turn off fan
 G28 ; Home all axes
 M84 ; Disable stepper motors
-M300 S20 P50 ; beep
-G4 P25 ; wait
-M300 S20000 P50 ; beep
-; MACHINE END CODE END
+M300 S440 P200 ; beep
+G4 P200 ; wait
+M300 S880 P200 ; beep higher pitch
+; MACHINE END CODE
 
-
-
-
-
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Before layer change G-code
 
 ;BEFORE_LAYER_CHANGE
 ;[layer_z]
 G92 E0
+;BEFORE_LAYER_CHANGE
 
-
-
-
-
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Layer change G-code
 
 ;AFTER_LAYER_CHANGE
 ;[layer_z]
+G91 ; Relative positioning
+G1 Z0.2 E-0.2 F1200 ; Spiral up 0.2mm while extruding 0.2mm
+G1 Z0.2 E0.1 F1200 ; Continue spiral up 0.2mm while extruding 0.1mm
+G1 Z0.1 F1200 ; Final lift of 0.1mm without extrusion
+G90 ; Back to absolute positioning
+;AFTER_LAYER_CHANGE
 
-
-
-
-
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Pause G-code
+
+;PAUSE
 M601
 G91 ; relative positioning
-G1 Z5 E-5 F3000 ; raise Z 5mm and retract 5mm
+G1 Z10 E-5 F1800 ; raise Z 10mm and retract 5mm
 G90 ; absolute positioning
-G1 X0 Y0 ; move to X=0 Y=0
+G1 X0 Y0 F5000 ; move to X=0 Y=0 quickly
+;PAUSE
