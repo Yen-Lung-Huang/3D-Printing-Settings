@@ -1,0 +1,281 @@
+{
+    "adaptive_bed_mesh_margin": "0",
+    "auxiliary_fan": "0",
+    "bbl_use_printhost": "0",
+    "bed_custom_model": "D:\\\\Code\\\\3D-Printing-Slicer-Settings\\\\Orca_Slicer_Settings\\\\3D_Printer\\\\Atom_3_Lite\\\\[Bed_Shape_Model]\\\\Atom 3 lite bed.stl",
+    "bed_custom_texture": "",
+    "bed_exclude_area": [
+        "0x0"
+    ],
+    "bed_mesh_max": "99999,99999",
+    "bed_mesh_min": "-99999,-99999",
+    "bed_mesh_probe_distance": "50,50",
+    "before_layer_change_gcode": ";BEFORE_LAYER_CHANGE\n;[layer_z]\nG92 E0",
+    "best_object_pos": "0.5,0.5",
+    "change_extrusion_role_gcode": "",
+    "change_filament_gcode": "",
+    "cooling_tube_length": "5",
+    "cooling_tube_retraction": "91.5",
+    "default_filament_profile": [],
+    "default_print_profile": "",
+    "deretraction_speed": [
+        "30"
+    ],
+    "disable_m73": "0",
+    "emit_machine_limits_to_gcode": "1",
+    "enable_filament_ramming": "1",
+    "enable_long_retraction_when_cut": "0",
+    "extra_loading_move": "0",
+    "extruder_clearance_height_to_lid": "55",
+    "extruder_clearance_height_to_rod": "6.5",
+    "extruder_clearance_radius": "20",
+    "extruder_colour": [
+        "#FCE94F"
+    ],
+    "extruder_offset": [
+        "0x0"
+    ],
+    "fan_kickstart": "0.5",
+    "fan_speedup_overhangs": "0",
+    "fan_speedup_time": "1.5",
+    "from": "User",
+    "gcode_flavor": "marlin",
+    "head_wrap_detect_zone": [],
+    "high_current_on_filament_swap": "1",
+    "host_type": "octoprint",
+    "inherits": "",
+    "is_custom_defined": "0",
+    "layer_change_gcode": ";AFTER_LAYER_CHANGE\n;[layer_z]",
+    "long_retractions_when_cut": [
+        "0"
+    ],
+    "machine_end_gcode": "; MACHINE END CODE START\nM104 S0 ; Turn off extruder heater\nM140 S0 ; Turn off bed heater\nM106 S255 ; Turn fan on full for cooling\nG91 ; Use relative positioning\nG1 E-10 F4000 ; Retract 10mm of filament to release pressure\nG1 E-5 F600 ; Slow retraction to prevent oozing\nM400 ; Wait for all movements to finish\nG4 P500 ; wait for 500 milliseconds (0.5 second)\nG1 Z+10 F3000 ; Lift nozzle 10mm up\nG90 ; Return to absolute positioning\nG1 X0 Y0 ; Move to home position\nM400 ; Wait for all movements to finish\nM106 S0 ; Turn off fan\nG28 ; Home all axes\nM84 ; Disable stepper motors\nM300 S20 P50 ; beep\nG4 P25 ; wait\nM300 S20000 P50 ; beep\n; MACHINE END CODE END",
+    "machine_load_filament_time": "0",
+    "machine_max_acceleration_e": [
+        "5000"
+    ],
+    "machine_max_acceleration_extruding": [
+        "5000"
+    ],
+    "machine_max_acceleration_retracting": [
+        "2000"
+    ],
+    "machine_max_acceleration_travel": [
+        "3000"
+    ],
+    "machine_max_acceleration_x": [
+        "3000"
+    ],
+    "machine_max_acceleration_y": [
+        "3000"
+    ],
+    "machine_max_acceleration_z": [
+        "500"
+    ],
+    "machine_max_jerk_e": [
+        "2.5"
+    ],
+    "machine_max_jerk_x": [
+        "9"
+    ],
+    "machine_max_jerk_y": [
+        "9"
+    ],
+    "machine_max_jerk_z": [
+        "0.3"
+    ],
+    "machine_max_speed_e": [
+        "60"
+    ],
+    "machine_max_speed_x": [
+        "200"
+    ],
+    "machine_max_speed_y": [
+        "200"
+    ],
+    "machine_max_speed_z": [
+        "50"
+    ],
+    "machine_min_extruding_rate": [
+        "0"
+    ],
+    "machine_min_travel_rate": [
+        "0"
+    ],
+    "machine_pause_gcode": "M601\nG91 ; relative positioning\nG1 Z5 E-5 F3000 ; raise Z 5mm and retract 5mm\nG90 ; absolute positioning\nG1 X0 Y0 ; move to X=0 Y=0",
+    "machine_start_gcode": "; MACHINE START CODE START\nM106 S255 ; Turn fan on full for cooling during heating\nM104 S[first_layer_temperature] ; Set extruder temperature for first layer\nM140 S[first_layer_bed_temperature] ; Set bed temperature for first layer\nM109 S[first_layer_temperature] ; Wait for extruder to reach target temp\nM190 S[first_layer_bed_temperature] ; Wait for bed to reach target temp\nG21 ; Use metric units\nG90 ; Use absolute positioning\nM83 ; Set extruder to relative mode\nG28 ; Home all axes\nG92 E0 ; Reset extruder position\n\n; Prime and clean nozzle\nG1 Z10 F3000 ; Move up slightly to avoid bed\nG0 X0 Y-130 Z1 ; Move to the front of the bed for priming\nM106 S0 ; Turn off fan\nG1 E30 F1800 ; Prime nozzle with fast extrusion (30mm filament)\nG1 E30 F600 ; Slow extrusion for more precise priming\nG1 E-1 F1800 ; Small retraction to reduce oozing\nM400 ; Wait for moves to complete\n\n; Prepare for printing\nG1 X0 Y-130 Z0.2 F3000 ; Move nozzle close to the bed to start printing\nG2 X-78 Y-104 I0 J130 Z-0.05 E6 F{outer_wall_volumetric_speed/(0.3*0.5) * 60} ; move in a partial circle, gradually lowering Z and extruding 6mm\nM400 ; Wait for move to complete\nG1 F3000 ; set feed rate to 3000\nM106 S65 ; set fan to low speed\n\nG92 E0 ; Reset extruder position again\n\n; Ready for first layer\n; Put printing message on LCD screen\n; MACHINE START CODE END",
+    "machine_unload_filament_time": "0",
+    "manual_filament_change": "1",
+    "max_layer_height": [
+        "0.32"
+    ],
+    "min_layer_height": [
+        "0.05"
+    ],
+    "name": "Layer One Atom 3 Lite 0.4 nozzle",
+    "nozzle_diameter": [
+        "0.4"
+    ],
+    "nozzle_height": "4",
+    "nozzle_hrc": "0",
+    "nozzle_type": "hardened_steel",
+    "nozzle_volume": "0",
+    "parking_pos_retraction": "92",
+    "preferred_orientation": "0",
+    "print_host": "",
+    "print_host_webui": "",
+    "printable_area": [
+        "134.486x11.766",
+        "132.949x23.4425",
+        "130.4x34.9406",
+        "126.859x46.1728",
+        "122.352x57.0535",
+        "116.914x67.5001",
+        "110.586x77.4329",
+        "103.416x86.7765",
+        "95.4596x95.4596",
+        "86.7765x103.416",
+        "77.4329x110.586",
+        "67.5001x116.914",
+        "57.0535x122.352",
+        "46.1728x126.859",
+        "34.9406x130.4",
+        "23.4425x132.949",
+        "11.766x134.486",
+        "8.26638e-15x135",
+        "-11.766x134.486",
+        "-23.4425x132.949",
+        "-34.9406x130.4",
+        "-46.1728x126.859",
+        "-57.0535x122.352",
+        "-67.5001x116.914",
+        "-77.4329x110.586",
+        "-86.7765x103.416",
+        "-95.4596x95.4596",
+        "-103.416x86.7765",
+        "-110.586x77.4329",
+        "-116.914x67.5001",
+        "-122.352x57.0535",
+        "-126.859x46.1728",
+        "-130.4x34.9406",
+        "-132.949x23.4425",
+        "-134.486x11.766",
+        "-135x1.65328e-14",
+        "-134.486x-11.766",
+        "-132.949x-23.4425",
+        "-130.4x-34.9406",
+        "-126.859x-46.1728",
+        "-122.352x-57.0535",
+        "-116.914x-67.5001",
+        "-110.586x-77.4329",
+        "-103.416x-86.7765",
+        "-95.4596x-95.4596",
+        "-86.7765x-103.416",
+        "-77.4329x-110.586",
+        "-67.5001x-116.914",
+        "-57.0535x-122.352",
+        "-46.1728x-126.859",
+        "-34.9406x-130.4",
+        "-23.4425x-132.949",
+        "-11.766x-134.486",
+        "-2.47991e-14x-135",
+        "11.766x-134.486",
+        "23.4425x-132.949",
+        "34.9406x-130.4",
+        "46.1728x-126.859",
+        "57.0535x-122.352",
+        "67.5001x-116.914",
+        "77.4329x-110.586",
+        "86.7765x-103.416",
+        "95.4596x-95.4596",
+        "103.416x-86.7765",
+        "110.586x-77.4329",
+        "116.914x-67.5001",
+        "122.352x-57.0535",
+        "126.859x-46.1728",
+        "130.4x-34.9406",
+        "132.949x-23.4425",
+        "134.486x-11.766",
+        "135x-3.30655e-14"
+    ],
+    "printable_height": "300",
+    "printer_model": "Layer One Atom 3",
+    "printer_notes": "",
+    "printer_settings_id": "Layer One Atom 3 Lite 0.4 nozzle",
+    "printer_structure": "delta",
+    "printer_technology": "FFF",
+    "printer_variant": "0.4",
+    "printhost_apikey": "",
+    "printhost_authorization_type": "key",
+    "printhost_cafile": "",
+    "printhost_password": "",
+    "printhost_port": "",
+    "printhost_ssl_ignore_revoke": "0",
+    "printhost_user": "",
+    "printing_by_object_gcode": "",
+    "purge_in_prime_tower": "1",
+    "retract_before_wipe": [
+        "70%"
+    ],
+    "retract_length_toolchange": [
+        "8"
+    ],
+    "retract_lift_above": [
+        "0"
+    ],
+    "retract_lift_below": [
+        "300"
+    ],
+    "retract_lift_enforce": [
+        "All Surfaces"
+    ],
+    "retract_restart_extra": [
+        "0"
+    ],
+    "retract_restart_extra_toolchange": [
+        "0"
+    ],
+    "retract_when_changing_layer": [
+        "1"
+    ],
+    "retraction_distances_when_cut": [
+        "18"
+    ],
+    "retraction_length": [
+        "4.75"
+    ],
+    "retraction_minimum_travel": [
+        "1"
+    ],
+    "retraction_speed": [
+        "30"
+    ],
+    "scan_first_layer": "0",
+    "silent_mode": "0",
+    "single_extruder_multi_material": "1",
+    "support_air_filtration": "0",
+    "support_chamber_temp_control": "0",
+    "support_multi_bed_types": "0",
+    "template_custom_gcode": "",
+    "thumbnails": "300x300/PNG",
+    "thumbnails_format": "PNG",
+    "time_cost": "0",
+    "time_lapse_gcode": "",
+    "upward_compatible_machine": [],
+    "use_firmware_retraction": "0",
+    "use_relative_e_distances": "1",
+    "version": "1.9.0.2",
+    "wipe": [
+        "1"
+    ],
+    "wipe_distance": [
+        "1"
+    ],
+    "z_hop": [
+        "0.6"
+    ],
+    "z_hop_types": [
+        "Slope Lift"
+    ],
+    "z_offset": "0"
+}

@@ -8,23 +8,26 @@ M109 S[first_layer_temperature] ; Wait for extruder to reach target temp
 M190 S[first_layer_bed_temperature] ; Wait for bed to reach target temp
 G21 ; Use metric units
 G90 ; Use absolute positioning
+M83 ; Set extruder to relative mode
 G28 ; Home all axes
-G92 E0.0 ; Reset extruder position to 0
+G92 E0 ; Reset extruder position
 
 ; Prime and clean nozzle
 G1 Z10 F3000 ; Move up slightly to avoid bed
 G0 X0 Y-130 Z1 ; Move to the front of the bed for priming
 M106 S0 ; Turn off fan
-G1 E30 F3000 ; Prime nozzle with fast extrusion (30mm filament)
+G1 E30 F1800 ; Prime nozzle with fast extrusion (30mm filament)
 G1 E30 F600 ; Slow extrusion for more precise priming
-M400 ; Wait for extrusion to complete
+G1 E-1 F1800 ; Small retraction to reduce oozing
+M400 ; Wait for moves to complete
 
 ; Prepare for printing
 G1 X0 Y-130 Z0.2 F3000 ; Move nozzle close to the bed to start printing
-G2 X-78 Y-104 I0 J130 Z-0.05 E0.0001 F{outer_wall_volumetric_speed/(0.3*0.5) * 60} ; move in a partial circle to (-78, 104), gradually lowering Z
-G1 F3000 ; set feed rate back to F3000
-G92 E0.0 ; Reset extruder position to 0
+G2 X-78 Y-104 I0 J130 Z-0.05 E6 F{outer_wall_volumetric_speed/(0.3*0.5) * 60} ; move in a partial circle, gradually lowering Z and extruding 6mm
+M400 ; Wait for move to complete
+G1 F3000 ; set feed rate to 3000
 M106 S65 ; set fan to low speed
+G92 E0 ; Reset extruder position again
 
 ; Ready for first layer
 ; Put printing message on LCD screen
