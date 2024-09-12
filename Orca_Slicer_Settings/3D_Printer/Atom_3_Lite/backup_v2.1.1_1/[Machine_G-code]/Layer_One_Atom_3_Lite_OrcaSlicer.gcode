@@ -17,11 +17,11 @@ G1 Z10 F3000 ; Move up slightly to avoid bed
 G0 X0 Y-130 Z0.8 ; Move to the front of the bed for priming
 M106 S0 ; Turn off fan
 G1 E10 F1800 ; Prime nozzle with fast extrusion (10mm filament)
-G1 E10 F300 ; Slow extrusion for more precise priming
+G1 E5 F300 ; Slow extrusion for more precise priming
 M400 ; Wait for moves to complete
 
 ; Prepare for printing
-G1 X0 Y-130 Z0.8 F3000 ; Move nozzle close to the bed to start printing
+G1 X0 Y-130 Z1 F3000 ; Move nozzle close to the bed to start printing
 G17; Select workspace plane XY
 G2 X-78 Y-104 I0 J130 Z-0.05 E5 F{outer_wall_volumetric_speed/(0.3*0.5) * 60} ; move in a partial circle, gradually lowering Z and extruding 6mm
 M400 ; Wait for move to complete
@@ -48,9 +48,9 @@ M400 ; Wait for all movements to finish
 M106 S0 ; Turn off fan
 G28 ; Home all axes
 M84 ; Disable stepper motors
-M300 S440 P200 ; beep
-G4 P200 ; wait
-M300 S880 P200 ; beep higher pitch
+M300 S440 P50 ; beep
+G4 P25 ; wait
+M300 S880 P50 ; beep higher pitch
 ; END MACHINE END CODE
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
