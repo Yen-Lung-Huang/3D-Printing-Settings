@@ -48,9 +48,9 @@ M400 ; Wait for all movements to finish
 M106 S0 ; Turn off fan
 G28 ; Home all axes
 M84 ; Disable stepper motors
-M300 S440 P50 ; beep
+M300 S40 P75 ; beep
 G4 P25 ; wait
-M300 S880 P50 ; beep higher pitch
+M300 S20000 P75 ; beep higher pitch
 ; END MACHINE END CODE
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
