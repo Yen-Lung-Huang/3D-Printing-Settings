@@ -65,10 +65,6 @@ G92 E0 ; Reset extruder position
 
 ; AFTER_LAYER_CHANGE
 ;[layer_z]
-G91 ; switch to relative positioning
-G17 ; select XY plane
-G3 Z[z_hop] I0.5 J0.5 P1 F12000; spiral rise "z_hop" mm, radius 0.5mm
-G90 ; switch back to absolute positioning
 ; END AFTER_LAYER_CHANGE
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

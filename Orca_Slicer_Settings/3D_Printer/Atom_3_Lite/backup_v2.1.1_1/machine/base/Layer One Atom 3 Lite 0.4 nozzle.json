@@ -10,7 +10,7 @@
     "bed_mesh_max": "99999,99999",
     "bed_mesh_min": "-99999,-99999",
     "bed_mesh_probe_distance": "50,50",
-    "before_layer_change_gcode": ";BEFORE_LAYER_CHANGE\n;[layer_z]\nG92 E0",
+    "before_layer_change_gcode": "; BEFORE_LAYER_CHANGE\nG92 E0 ; Reset extruder position\n; END BEFORE_LAYER_CHANGE",
     "best_object_pos": "0.5,0.5",
     "change_extrusion_role_gcode": "",
     "change_filament_gcode": "",
@@ -19,7 +19,7 @@
     "default_filament_profile": [],
     "default_print_profile": "",
     "deretraction_speed": [
-        "30"
+        "60"
     ],
     "disable_m73": "0",
     "emit_machine_limits_to_gcode": "1",
@@ -45,11 +45,11 @@
     "host_type": "octoprint",
     "inherits": "",
     "is_custom_defined": "0",
-    "layer_change_gcode": ";AFTER_LAYER_CHANGE\n;[layer_z]",
+    "layer_change_gcode": "; AFTER_LAYER_CHANGE\n;[layer_z]\n; END AFTER_LAYER_CHANGE",
     "long_retractions_when_cut": [
         "0"
     ],
-    "machine_end_gcode": "; MACHINE END CODE START\nM104 S0 ; Turn off extruder heater\nM140 S0 ; Turn off bed heater\nM106 S255 ; Turn fan on full for cooling\nG91 ; Use relative positioning\nG1 E-10 F4000 ; Retract 10mm of filament to release pressure\nG1 E-5 F600 ; Slow retraction to prevent oozing\nM400 ; Wait for all movements to finish\nG4 P500 ; wait for 500 milliseconds (0.5 second)\nG1 Z+10 F3000 ; Lift nozzle 10mm up\nG90 ; Return to absolute positioning\nG1 X0 Y0 ; Move to home position\nM400 ; Wait for all movements to finish\nM106 S0 ; Turn off fan\nG28 ; Home all axes\nM84 ; Disable stepper motors\nM300 S20 P50 ; beep\nG4 P25 ; wait\nM300 S20000 P50 ; beep\n; MACHINE END CODE END",
+    "machine_end_gcode": "; MACHINE END CODE\nM104 S0 ; Turn off extruder heater\nM140 S0 ; Turn off bed heater\nM106 S255 ; Turn fan on full for cooling\nG91 ; Use relative positioning\nG1 E-2 F1800 ; Quick retract 2mm to release pressure\nG1 E-8 F300 ; Slow retraction of 8mm to prevent oozing\nM400 ; Wait for all movements to finish\nG1 Z+20 F1200 ; Lift nozzle 20mm up slowly\nG90 ; Return to absolute positioning\nG1 X0 Y0 F5000 ; Move to home position quickly\nM400 ; Wait for all movements to finish\nM106 S0 ; Turn off fan\nG28 ; Home all axes\nM84 ; Disable stepper motors\nM300 S440 P200 ; beep\nG4 P200 ; wait\nM300 S880 P200 ; beep higher pitch\n; END MACHINE END CODE",
     "machine_load_filament_time": "0",
     "machine_max_acceleration_e": [
         "5000"
@@ -102,8 +102,8 @@
     "machine_min_travel_rate": [
         "0"
     ],
-    "machine_pause_gcode": "M601\nG91 ; relative positioning\nG1 Z5 E-5 F3000 ; raise Z 5mm and retract 5mm\nG90 ; absolute positioning\nG1 X0 Y0 ; move to X=0 Y=0",
-    "machine_start_gcode": "; MACHINE START CODE START\nM106 S255 ; Turn fan on full for cooling during heating\nM104 S[first_layer_temperature] ; Set extruder temperature for first layer\nM140 S[first_layer_bed_temperature] ; Set bed temperature for first layer\nM109 S[first_layer_temperature] ; Wait for extruder to reach target temp\nM190 S[first_layer_bed_temperature] ; Wait for bed to reach target temp\nG21 ; Use metric units\nG90 ; Use absolute positioning\nM83 ; Set extruder to relative mode\nG28 ; Home all axes\nG92 E0 ; Reset extruder position\n\n; Prime and clean nozzle\nG1 Z10 F3000 ; Move up slightly to avoid bed\nG0 X0 Y-130 Z1 ; Move to the front of the bed for priming\nM106 S0 ; Turn off fan\nG1 E30 F1800 ; Prime nozzle with fast extrusion (30mm filament)\nG1 E30 F600 ; Slow extrusion for more precise priming\nG1 E-1 F1800 ; Small retraction to reduce oozing\nM400 ; Wait for moves to complete\n\n; Prepare for printing\nG1 X0 Y-130 Z0.2 F3000 ; Move nozzle close to the bed to start printing\nG2 X-78 Y-104 I0 J130 Z-0.05 E6 F{outer_wall_volumetric_speed/(0.3*0.5) * 60} ; move in a partial circle, gradually lowering Z and extruding 6mm\nM400 ; Wait for move to complete\nG1 F3000 ; set feed rate to 3000\nM106 S65 ; set fan to low speed\n\nG92 E0 ; Reset extruder position again\n\n; Ready for first layer\n; Put printing message on LCD screen\n; MACHINE START CODE END",
+    "machine_pause_gcode": ";PAUSE\nM601\nG91 ; relative positioning\nG1 Z10 E-5 F1800 ; raise Z 10mm and retract 5mm\nG90 ; absolute positioning\nG1 X0 Y0 F5000 ; move to X=0 Y=0 quickly\n; END PAUSE",
+    "machine_start_gcode": "; MACHINE START CODE\nM106 S255 ; Turn fan on full for cooling during heating\nM104 S[first_layer_temperature] ; Set extruder temperature for first layer\nM140 S[first_layer_bed_temperature] ; Set bed temperature for first layer\nM109 S[first_layer_temperature] ; Wait for extruder to reach target temp\nM190 S[first_layer_bed_temperature] ; Wait for bed to reach target temp\nG21 ; Use metric units\nG90 ; Use absolute positioning\nM83 ; Set extruder to relative mode\nG28 ; Home all axes\nG92 E0 ; Reset extruder position\n\n; Prime and clean nozzle\nG1 Z10 F3000 ; Move up slightly to avoid bed\nG0 X0 Y-130 Z0.8 ; Move to the front of the bed for priming\nM106 S0 ; Turn off fan\nG1 E10 F1800 ; Prime nozzle with fast extrusion (10mm filament)\nG1 E10 F300 ; Slow extrusion for more precise priming\nM400 ; Wait for moves to complete\n\n; Prepare for printing\nG1 X0 Y-130 Z0.8 F3000 ; Move nozzle close to the bed to start printing\nG17; Select workspace plane XY\nG2 X-78 Y-104 I0 J130 Z-0.05 E5 F{outer_wall_volumetric_speed/(0.3*0.5) * 60} ; move in a partial circle, gradually lowering Z and extruding 6mm\nM400 ; Wait for move to complete\nG1 F3000 ; set feed rate to 3000\nM106 S65 ; set fan to low speed\nG92 E0 ; Reset extruder position again\n; END MACHINE START CODE",
     "machine_unload_filament_time": "0",
     "manual_filament_change": "1",
     "max_layer_height": [
@@ -242,13 +242,13 @@
         "18"
     ],
     "retraction_length": [
-        "4.75"
+        "6.5"
     ],
     "retraction_minimum_travel": [
         "1"
     ],
     "retraction_speed": [
-        "30"
+        "100"
     ],
     "scan_first_layer": "0",
     "silent_mode": "0",
@@ -275,7 +275,7 @@
         "0.6"
     ],
     "z_hop_types": [
-        "Slope Lift"
+        "Normal Lift"
     ],
     "z_offset": "0"
 }
