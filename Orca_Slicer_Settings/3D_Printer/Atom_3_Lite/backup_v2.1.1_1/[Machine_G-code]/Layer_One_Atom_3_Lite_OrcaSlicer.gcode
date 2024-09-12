@@ -14,16 +14,16 @@ G92 E0 ; Reset extruder position
 
 ; Prime and clean nozzle
 G1 Z10 F3000 ; Move up slightly to avoid bed
-G0 X0 Y-130 Z0.3 ; Move to the front of the bed for priming
+G0 X0 Y-130 Z0.8 ; Move to the front of the bed for priming
 M106 S0 ; Turn off fan
 G1 E10 F1800 ; Prime nozzle with fast extrusion (10mm filament)
 G1 E10 F300 ; Slow extrusion for more precise priming
 M400 ; Wait for moves to complete
 
 ; Prepare for printing
-G1 X0 Y-130 Z0.3 F3000 ; Move nozzle close to the bed to start printing
+G1 X0 Y-130 Z0.8 F3000 ; Move nozzle close to the bed to start printing
 G17; Select workspace plane XY
-G2 X-78 Y-104 I0 J130 Z-0.05 E6 F{outer_wall_volumetric_speed/(0.3*0.5) * 60} ; move in a partial circle, gradually lowering Z and extruding 6mm
+G2 X-78 Y-104 I0 J130 Z-0.05 E5 F{outer_wall_volumetric_speed/(0.3*0.5) * 60} ; move in a partial circle, gradually lowering Z and extruding 6mm
 M400 ; Wait for move to complete
 G1 F3000 ; set feed rate to 3000
 M106 S65 ; set fan to low speed
@@ -67,7 +67,7 @@ G92 E0 ; Reset extruder position
 ;[layer_z]
 G91 ; switch to relative positioning
 G17 ; select XY plane
-G3 I0.75 J0.75 P1 F12000; spiral rise "z_hop" mm, radius 0.75mm
+G3 Z[z_hop] I0.5 J0.5 P1 F12000; spiral rise "z_hop" mm, radius 0.5mm
 G90 ; switch back to absolute positioning
 ; END AFTER_LAYER_CHANGE
 
