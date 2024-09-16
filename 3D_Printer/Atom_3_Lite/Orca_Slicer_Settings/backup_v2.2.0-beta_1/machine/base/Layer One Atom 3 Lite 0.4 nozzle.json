@@ -2,7 +2,7 @@
     "adaptive_bed_mesh_margin": "0",
     "auxiliary_fan": "0",
     "bbl_use_printhost": "0",
-    "bed_custom_model": "D:\\\\Code\\\\3D-Printing-Slicer-Settings\\\\Orca_Slicer_Settings\\\\3D_Printer\\\\Atom_3_Lite\\\\[Bed_Shape_Model]\\\\Atom 3 lite bed.stl",
+    "bed_custom_model": "D:\\\\Code\\\\3D-Printing-Slicer-Settings\\\\3D_Printer\\\\Atom_3_Lite\\\\[Bed_Shape_Model]\\\\Atom_3_lite_bed.stl",
     "bed_custom_texture": "",
     "bed_exclude_area": [
         "0x0"
