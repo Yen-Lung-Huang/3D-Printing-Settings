@@ -3,7 +3,7 @@
 ## 安裝與設定指南  
 
 1. **安裝 Orca Slicer 2.2.0**  
-   - [下載連結](https://github.com/SoftFever/OrcaSlicer/tree/v2.2.0-beta)  
+   - [下載連結](https://github.com/SoftFever/OrcaSlicer/releases/tag/v2.2.0-beta)  
 
 2. **打開 Orca Slicer 的設定資料夾**  
    ![打開 Orca Slicer 設定資料夾](https://github.com/user-attachments/assets/a25e2c53-8bf1-439a-853a-231aa897e807)  
