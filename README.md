@@ -1,6 +1,6 @@
 # 3D Printing Slicer Settings  
 
-## 安裝與設定指南  
+## 適用於 ATOM 3 Lite 的 Orca Slicer 安裝與設定指南  
 
 1. **安裝 Orca Slicer 2.2.0**  
    - [下載連結](https://github.com/SoftFever/OrcaSlicer/releases/tag/v2.2.0-beta)  
