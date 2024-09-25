@@ -52,28 +52,28 @@
     "machine_end_gcode": "; MACHINE END CODE\nM104 S0 ; Turn off extruder heater\nM140 S0 ; Turn off bed heater\nM106 S255 ; Turn fan on full for cooling\nG91 ; Use relative positioning\nG1 E-2 F1800 ; Quick retract 2mm to release pressure\nG1 E-8 F300 ; Slow retraction of 8mm to prevent oozing\nM400 ; Wait for all movements to finish\nG1 Z+20 F1200 ; Lift nozzle 20mm up slowly\nG90 ; Return to absolute positioning\nG1 X0 Y0 F5000 ; Move to home position quickly\nM400 ; Wait for all movements to finish\nM106 S0 ; Turn off fan\nG28 ; Home all axes\nM84 ; Disable stepper motors\nM300 S40 P75 ; beep\nG4 P25 ; wait\nM300 S20000 P75 ; beep higher pitch\n; END MACHINE END CODE",
     "machine_load_filament_time": "0",
     "machine_max_acceleration_e": [
-        "5000"
+        "3000"
     ],
     "machine_max_acceleration_extruding": [
-        "5000"
+        "20000"
     ],
     "machine_max_acceleration_retracting": [
-        "2000"
+        "3000"
     ],
     "machine_max_acceleration_travel": [
-        "3000"
+        "20000"
     ],
     "machine_max_acceleration_x": [
-        "3000"
+        "20000"
     ],
     "machine_max_acceleration_y": [
-        "3000"
+        "20000"
     ],
     "machine_max_acceleration_z": [
         "500"
     ],
     "machine_max_jerk_e": [
-        "2.5"
+        "2"
     ],
     "machine_max_jerk_x": [
         "9"
@@ -82,7 +82,7 @@
         "9"
     ],
     "machine_max_jerk_z": [
-        "0.3"
+        "5"
     ],
     "machine_max_speed_e": [
         "60"
@@ -277,7 +277,7 @@
         "3"
     ],
     "z_hop": [
-        "0.075"
+        "0.12"
     ],
     "z_hop_types": [
         "Slope Lift"

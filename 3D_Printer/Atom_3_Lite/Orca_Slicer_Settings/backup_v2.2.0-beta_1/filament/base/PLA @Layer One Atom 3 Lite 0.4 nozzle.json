@@ -109,7 +109,7 @@
         "nil"
     ],
     "filament_max_volumetric_speed": [
-        "7.5"
+        "5"
     ],
     "filament_minimal_purge_on_wipe_tower": [
         "15"
