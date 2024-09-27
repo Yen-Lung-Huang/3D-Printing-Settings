@@ -223,13 +223,13 @@
     "inherits": "",
     "name": "PLA @Layer One Atom 3 Lite 0.4 nozzle",
     "nozzle_temperature": [
-        "200"
+        "225"
     ],
     "nozzle_temperature_initial_layer": [
-        "205"
+        "225"
     ],
     "nozzle_temperature_range_high": [
-        "220"
+        "230"
     ],
     "nozzle_temperature_range_low": [
         "190"
